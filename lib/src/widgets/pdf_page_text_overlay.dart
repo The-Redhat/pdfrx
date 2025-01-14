@@ -618,6 +618,21 @@ class _PdfTextRenderBox extends RenderBox
           ? SelectedContent(plainText: _selectedText!)
           : null;
 
+  @override
+  SelectedContentRange? getSelection() {
+    if (value.hasSelection && _selectedRanges.ranges.isNotEmpty) {
+      return SelectedContentRange(
+        startOffset: _selectedRanges.ranges.first.start,
+        endOffset: _selectedRanges.ranges.last.end,
+      );
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  int get contentLength => value.hasSelection && _selectedRanges.ranges.isNotEmpty ? _selectedRanges.ranges.last.end - _selectedRanges.ranges.first.start : 0;
+
   LayerLink? _startHandle;
   LayerLink? _endHandle;
 
